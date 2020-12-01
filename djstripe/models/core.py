@@ -1349,10 +1349,10 @@ class Event(StripeModel):
         # Rollback any DB operations in the case of failure so
         # we will retry creating and processing the event the
         # next time the webhook fires.
-        with transaction.atomic():
-            ret = cls._create_from_stripe_object(data)
-            ret.invoke_webhook_handlers()
-            return ret
+        # with transaction.atomic():
+        ret = cls._create_from_stripe_object(data)
+        ret.invoke_webhook_handlers()
+        return ret
 
     def invoke_webhook_handlers(self):
         """

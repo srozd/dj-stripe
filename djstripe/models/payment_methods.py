@@ -33,11 +33,11 @@ class DjstripePaymentMethod(models.Model):
         source_type = data["object"]
         model = cls._model_for_type(source_type)
 
-        with transaction.atomic():
-            model.sync_from_stripe_data(data)
-            instance, _ = cls.objects.get_or_create(
-                id=data["id"], defaults={"type": source_type}
-            )
+        # with transaction.atomic():
+        model.sync_from_stripe_data(data)
+        instance, _ = cls.objects.get_or_create(
+            id=data["id"], defaults={"type": source_type}
+        )
 
         return instance
 

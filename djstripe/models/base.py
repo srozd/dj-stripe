@@ -522,17 +522,17 @@ class StripeModel(models.Model):
             # We wrap the `_create_from_stripe_object` in a transaction to
             # avoid TransactionManagementError on subsequent queries in case
             # of the IntegrityError catch below. See PR #903
-            with transaction.atomic():
-                return (
-                    cls._create_from_stripe_object(
-                        data,
-                        current_ids=current_ids,
-                        pending_relations=pending_relations,
-                        save=save,
-                        stripe_account=stripe_account,
-                    ),
-                    True,
-                )
+            # with transaction.atomic():
+            return (
+                cls._create_from_stripe_object(
+                    data,
+                    current_ids=current_ids,
+                    pending_relations=pending_relations,
+                    save=save,
+                    stripe_account=stripe_account,
+                ),
+                True,
+            )
         except IntegrityError:
             # Handle the race condition that something else created the object
             # after the `get` and before `_create_from_stripe_object`.

@@ -245,7 +245,7 @@ class BaseInvoice(StripeModel):
         "webhook, for example, so you might not want to display that invoice as "
         "unpaid to your users.",
     )
-    auto_advance = models.NullBooleanField(
+    auto_advance = models.BooleanField(null=True,
         help_text="Controls whether Stripe will perform automatic collection of the "
         "invoice. When false, the invoice’s state will not automatically "
         "advance without an explicit action."
